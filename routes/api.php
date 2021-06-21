@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/books', [BookController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/books', [BookController::class, 'index']);
