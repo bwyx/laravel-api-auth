@@ -3,6 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\Book;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,5 +18,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        Book::truncate();
+        $faker = \Faker\Factory::create();
+        for ($i = 0; $i < 50; $i++) {
+            Book::create([
+                'title' => $faker->sentence,
+                'author' => $faker->name,
+            ]);
+        }
+        User::truncate();
+        User::create([
+            'name' => 'Sugeng',
+            'email' => 'sugeng@gmail.com',
+            'password' => Hash::make('pwdpwd'),
+        ]);
     }
 }
