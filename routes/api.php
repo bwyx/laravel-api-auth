@@ -15,8 +15,12 @@ use App\Http\Controllers\BookController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return response()->json([
+        'name' => $request->user()->name,
+        'email' => $request->user()->email,
+        'isVerified' => !!$request->user()->email_verified_at
+    ]);
 });
 
 Route::middleware('auth:sanctum')->get('/books', [BookController::class, 'index']);
