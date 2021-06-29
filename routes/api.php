@@ -15,8 +15,15 @@ use App\Http\Controllers\BookController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
+    if(!$request->user()) {
+        return response()->json([
+            'isAuthenticated' => false
+        ]);
+    }
+
     return response()->json([
+        'isAuthenticated' => true,
         'name' => $request->user()->name,
         'email' => $request->user()->email,
         'isVerified' => !!$request->user()->email_verified_at
