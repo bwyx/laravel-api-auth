@@ -16,7 +16,9 @@ use App\Http\Controllers\BookController;
 */
 
 Route::get('/user', function (Request $request) {
-    if(!$request->user()) {
+    $user = $request->user();
+    
+    if(!$user) {
         return response()->json([
             'isAuthenticated' => false
         ]);
@@ -24,9 +26,10 @@ Route::get('/user', function (Request $request) {
 
     return response()->json([
         'isAuthenticated' => true,
-        'name' => $request->user()->name,
-        'email' => $request->user()->email,
-        'isVerified' => !!$request->user()->email_verified_at
+        'name' => $user->name,
+        'email' => $user->email,
+        'isVerified' => $user->isVerified(),
+        'avatar' => $user->providers()->latest()->first()->avatar ?? null
     ]);
 });
 

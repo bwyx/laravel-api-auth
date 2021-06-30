@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->away(env('FRONTEND_URL'));
 });
+
+Route::get('/auth/{provider}', [LoginController::class, 'redirectToProvider']);
+
+Route::get('/auth/{provider}/callback', [LoginController::class, 'handleProviderCallback']);
 
 Auth::routes();
 
